@@ -1,3 +1,28 @@
+----------------
+@foreach($getproducts as $key=> $product)
+<div class="prod-cat-card-wrap">
+    <div class="product list-product-area">
+        <div class="product_img">
+            <?php $getProductURL = Product::productURL($product['product_name']); ?>
+            <a href="{{ url('product/'.$getProductURL.'/'.$product['id']) }}">
+               @if(!empty($product['product_image']))
+                   <img src="{{ asset('front/images/products/small/'.$product['productimages'][0]['image'])}}" alt="{{$product['product_name']}}">
+               @else
+                   <img src="{{asset('front/images/no-image-found.jpg')}}" alt="{{$product['product_name']}}">
+               @endif
+            </a>
+            <div class="product_action_whishlist">
+                <?php $checkwish =0; ?>
+                 @if(Auth::check())
+                     <?php $checkwish = Wishlist::checkwishlist($product['id']); ?>
+                 @endif
+                <div class="whishlist_link">
+                    <a href="javascript:;" data-productid="{{$product['id']}}" @if($checkwish > 0) class="whishlist_link_a icon-heart-fill addWishList" @else class="whishlist_link_a addWishList" @endif><i class="icon-heart"></i></a>
+                </div>
+            </div>
+
+---------------
+
 {
     "status": "200",
     "allProducts_pg": {
